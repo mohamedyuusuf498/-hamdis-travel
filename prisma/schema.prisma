@@ -1,0 +1,183 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String?
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model TourPackage {
+  id          String          @id @default(cuid())
+  title       String
+  slug        String          @unique
+  destination String
+  country     String
+  price       Float
+  duration    Int
+  groupSize   Int             @default(10)
+  rating      Float           @default(4.5)
+  reviewCount Int             @default(0)
+  description String          @db.Text
+  highlights  String[]
+  includes    String[]
+  excludes    String[]
+  imageUrl    String
+  images      String[]
+  category    PackageCategory @default(ADVENTURE)
+  featured    Boolean         @default(false)
+  active      Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  bookings Booking[]
+  reviews  Review[]
+
+  @@map("tour_packages")
+}
+
+model Destination {
+  id          String   @id @default(cuid())
+  name        String
+  country     String
+  slug        String   @unique
+  description String   @db.Text
+  imageUrl    String
+  featured    Boolean  @default(false)
+  continent   String
+  climate     String?
+  bestTime    String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("destinations")
+}
+
+model Booking {
+  id              String        @id @default(cuid())
+  bookingRef      String        @unique @default(cuid())
+  firstName       String
+  lastName        String
+  email           String
+  phone           String
+  destination     String
+  travelDate      DateTime
+  returnDate      DateTime?
+  travelers       Int
+  adults          Int           @default(1)
+  children        Int           @default(0)
+  packageId       String?
+  specialRequests String?       @db.Text
+  status          BookingStatus @default(PENDING)
+  totalPrice      Float?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  package TourPackage? @relation(fields: [packageId], references: [id])
+
+  @@map("bookings")
+}
+
+model GalleryImage {
+  id          String          @id @default(cuid())
+  title       String
+  description String?
+  imageUrl    String
+  category    GalleryCategory @default(NATURE)
+  featured    Boolean         @default(false)
+  active      Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@map("gallery_images")
+}
+
+model Review {
+  id        String      @id @default(cuid())
+  name      String
+  email     String
+  rating    Int
+  comment   String      @db.Text
+  avatar    String?
+  packageId String?
+  featured  Boolean     @default(false)
+  approved  Boolean     @default(false)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  package TourPackage? @relation(fields: [packageId], references: [id])
+
+  @@map("reviews")
+}
+
+model Newsletter {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@map("newsletter_subscribers")
+}
+
+model ContactMessage {
+  id        String        @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String        @db.Text
+  status    MessageStatus @default(UNREAD)
+  createdAt DateTime      @default(now())
+
+  @@map("contact_messages")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum PackageCategory {
+  ADVENTURE
+  BEACH
+  CULTURAL
+  LUXURY
+  FAMILY
+  HONEYMOON
+  SAFARI
+  CRUISE
+}
+
+enum GalleryCategory {
+  BEACHES
+  CITIES
+  NATURE
+  ADVENTURE
+  CULTURE
+  FOOD
+}
+
+enum MessageStatus {
+  UNREAD
+  READ
+  REPLIED
+}
