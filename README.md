@@ -2,7 +2,7 @@
 
 This is a complete, full-stack, production-ready travel agency website built with a modern technology stack. It features a beautiful, professional user interface, a comprehensive booking system, and a full-featured admin panel for managing the site's content.
 
-**Live Demo:** [https://3000-iv1qitwdmomvfg2tp5cxt-ce0ae6b5.sg1.manus.computer](https://3000-iv1qitwdmomvfg2tp5cxt-ce0ae6b5.sg1.manus.computer)
+**Live Demo:
 
 ## Features
 
