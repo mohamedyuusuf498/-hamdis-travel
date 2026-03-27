@@ -21,7 +21,6 @@ This is a complete, full-stack, production-ready travel agency website built wit
 
 ### Admin Panel
 
-*   **Secure Login:** Admin-only access protected by Firebase Authentication.
 *   **Dashboard:** An overview of key metrics like total bookings, active packages, and new messages.
 *   **Package Management:** Full CRUD (Create, Read, Update, Delete) functionality for tour packages.
 *   **Booking Management:** View, manage, and update the status of all customer bookings.
@@ -40,7 +39,7 @@ This is a complete, full-stack, production-ready travel agency website built wit
 
 ## Getting Started
 
-To get a local copy up and running, please follow the detailed steps in the [SETUP_GUIDE.md](SETUP_GUIDE.md) file.
+SETUP_GUIDE.md](SETUP_GUIDE.md) file.
 
 ## Folder Structure
 
